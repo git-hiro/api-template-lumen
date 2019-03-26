@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   nginx:
-    container_name: api_lumen_nginx
+    container_name: nginx
     image: nginx:1.15-alpine
     ports:
       - '8080:80'
@@ -12,18 +12,18 @@ services:
       - frontend
 
   fpm:
-    container_name: api_lumen_fpm
+    container_name: fpm
     build:
       context: ./
-      dockerfile: ./tools/docker/fpm/Dockerfile
+      dockerfile: ./tools/fpm/Dockerfile
     volumes:
-      - ${BASE_DIR}/lumen/:/var/www
+      - ${BASE_DIR}/:/var/www
     networks:
       - frontend
       - backend
 
   database:
-    container_name: api_lumen_db
+    container_name: database
     image: postgres:10-alpine
     ports:
       - '5432:5432'
